@@ -1,0 +1,11 @@
+.\obj\heap_2.o: ..\free_rtos\heap_2.c
+.\obj\heap_2.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\obj\heap_2.o: ..\free_rtos\FreeRTOS.h
+.\obj\heap_2.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\obj\heap_2.o: ..\free_rtos\projdefs.h
+.\obj\heap_2.o: ..\free_rtos\FreeRTOSConfig.h
+.\obj\heap_2.o: ..\free_rtos\portable.h
+.\obj\heap_2.o: ..\free_rtos\portmacro.h
+.\obj\heap_2.o: ..\free_rtos\mpu_wrappers.h
+.\obj\heap_2.o: ..\free_rtos\task.h
+.\obj\heap_2.o: ..\free_rtos\list.h

@@ -1,0 +1,112 @@
+Industry-Standard Graphical LCD Display Info:
+
+To call this LCD the "industry standard" might be a little bit questionable,
+but most small LCD displays do use this standard. It seems that just as the
+Hitachi HD44780 is the clear leader in controlling character-based LCDs, the
+Samsung KS0108 is the most popular chip for controlling graphical LCDs, and
+most LCD manufacturers simply follow the KS0108 standard for smaller
+graphical LCDs (in the 128 x 64 pixel or 256 x 64 pixel configuration).
+
+Typical pinout is as follows:
+
+1: Vss (Ground)
+2: Vdd (+5V)
+3: V0 (Contrast adjust)
+4: RS (or D/I) (0 = instruction, 1 = data)
+5: R/W (0 = Write to LCD, 1 = read from LCD)
+6: E (Enable)
+7: DB0
+8: DB1
+9: DB2
+10: DB3
+11: DB4
+12: DB5
+13: DB6
+14: DB7
+15: CS1 (Chip select 1; Selects left side of screen)
+16: CS2 (Chip select 2; Selects right side of screen)
+17: RST (Reset; Active-low)
+18: Vee (-8V OUTPUT)
+19: A (Backlight anode) (Positive connection)
+20: K (Backlight cathode) (Negative connection)
+
+Vss is Ground, and Vdd is +5V. So far, everything seems to be the usual
+story. But the other two "V" pins have a bit of a surprise in store.
+
+On an LCD based on the KS0108, the pin named Vee is misleading. After using a
+character-based LCD and feeding a negative voltage into it to adjust the LCD
+contrast, you might naturally assume that you're supposed to do the same
+here. But things are totally different with the KS0108: Vee is not an input,
+it's an output! It produces about -8 volts all by itself (although mine seems
+to produce more like -15 volts). The LCD contrast adjust pin here is actually
+V0. Typically, a potentiometer is used to control V0. Normally the two sides
+of the pot are connected between Vee and Vdd, and the pot's "wiper" (center
+connection) is then connected to V0. I recommend the use of a small trimmer
+resistor in the range of 5K to 20K, which you can then fine-tune with a
+screwdriver. Once you understand it, this is supposed to be easier to
+implement, because instead of needing two separate voltage supplies, you only
+need one, and the board itself creates its own negative voltage for you.
+
+The CS pins essentially divide the display into 64 x 64 pixel blocks. The
+pinout here is for a 128 x 64 LCD; CS1 turns the left side on and off, and
+CS2 controls the right side. This is because each KS0108 chip is only capable
+of handling 64 columns, so there are actually two chip controllers on such an
+LCD, each controlling one half of the display. On 256 x 64 LCDs, there would
+be two additional CS pins. CS1 would be the leftmost quarter of the screen,
+and CS4 would be the rightmost. (The CS pins may be active-low on some
+modules.)
+
+The reset pin is an active-low reset signal. It does not seem to actually
+need to be used when you power up the display. All other pins are duplicates
+of what you'd see on a standard HD44780 character-based display.
+
+If your LCD has an additional two pins for the backlight, one is the positive
+end and one is the negative (ground) end. Typically, these backlights will
+operate on about 5 volts as well, but usually they use slightly less; In
+fact, some backlights have a maximum voltage rating of no more than 4.5
+volts, and some may even be 3.5 volts. Beware of this, and think twice about
+connecting the backlight directly to a 5-volt supply. You should also use a
+resistor (at least 100 to 200 ohms) with the backlight to provide overload
+protection.
+
+Quick-Start For Industry-Standard Graphical LCD Displays:
+
+Begin by hooking up ground to Vss and 5 volts to Vdd. Put a 20K potentiometer
+between Vee and Vdd, and connect the pot's wiper (center connection) to V0.
+At this time, you may wish to pause and actually power on the LCD as it is so
+you can adjust the contrast to an appropriate setting. Or, you can save this
+for later; It's your choice.
+
+Let's begin by turning the display on. The command for this is 00111111, so
+put that on the data bus (DB7 and DB6 low, the other 6 high). Set both RS and
+R/W low (because this is to be written to the instruction register). Also
+make sure at least one of the two CS pins are active, because otherwise the
+instruction will have no effect.
+
+Now pulse the Enable pin, and the display should come on. You may not be able
+to see anything on it yet; It's often the case that when a graphical LCD
+display is first powered on, there will be some garbage stored in the DDRAM
+as random noise, and this may pop up on the screen.
+
+Now set RS high, so the data you write to the LCD will be displayed on the
+screen. Now you can put anything you want on the data bus, and then pulse the
+Enable pin; The contents of the data bus should start showing up on the
+screen. Remember that each pin on the data bus is one pixel at the current
+memory address.
+
+You can also experiment with changing the current memory address. To change
+the horizontal position, use the 01YYYYYY command, where YYYYYY is the binary
+number of the horizontal position you wish to use, from 0 to 63. Remember,
+each chip on the LCD module controls only 64 columns. If you wanted to
+control column 70, therefore, you would turn on CS2 and then use the 01000110
+command, because that would be the sixth column from the beginning of the
+second chip's area, and 64 + 6 = 70.
+
+Changing the vertical position is just as easy: Use the 10111XXX command,
+where XXX is the "page" you want to move to. The rows on the display are
+divided into 8 pages, each of which is 8 pixels high. This is because each
+byte in the DDRAM is actually 8 pixels (one pixel for each bit).
+
+Now you know most of the commands for the KS0108, and you can begin to
+interface it to a 16C84 or 16F84 PIC (a popular electronics project), or even
+a full-blown computer CPU like a Z80 or 6502. Have fun.

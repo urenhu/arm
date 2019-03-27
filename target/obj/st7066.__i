@@ -1,0 +1,6 @@
+-c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections --asm --interleave --asm_dir ".\\obj\\" -I..\core -I..\STM32F10x_StdPeriph_Driver\inc -I..\app -I..\usr_lib -I..\ctt -I..\glcd\st7066 -I..\sensor -I..\free_rtos -I..\glcd\glcd-ili9328
+-I C:\project\diy-project\stm32fxx\stm32_glcd_base\target\RTE
+-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include
+-I C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.0.0\Device\Include
+-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER
+-o .\obj\st7066.o --list_dir ".\\obj\\" --list --omf_browse .\obj\st7066.crf --depend .\obj\st7066.d "..\glcd\st7066\st7066.c"

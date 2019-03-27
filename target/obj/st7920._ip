@@ -1,0 +1,6 @@
+..\glcd\st7920.c -E -c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I..\core -I..\STM32F10x_StdPeriph_Driver\inc -I..\app -I..\usr_lib -I..\ctt -I..\glcd -I..\sensor
+-I C:\Users\tisdk\Desktop\imgcapture_prototype\target\RTE
+-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include
+-I C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include
+-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER
+-o .\obj\st7920.i --list_dir ".\\obj\\" --list

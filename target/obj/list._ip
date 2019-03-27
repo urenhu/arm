@@ -1,0 +1,6 @@
+..\free_rtos\list.c -E -c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I..\cmsis -I..\main -I..\usr_lib -I..\ctt -I..\sensor -I..\free_rtos -I..\STM32F10x_StdPeriph -I..\STM32F10x_StdPeriph\inc
+-I C:\project\diy-project\stm32fxx\stm32_glcd_base\target\RTE
+-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include
+-I C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.0.0\Device\Include
+-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER
+-o .\obj\list.i --list_dir ".\\obj\\" --list
